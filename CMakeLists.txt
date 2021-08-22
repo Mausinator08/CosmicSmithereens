@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.11.0)
-project(CosmicSmithereens VERSION 0.1.0)
+project(CosmicSmithereens)
 
 include(CTest)
 enable_testing()
