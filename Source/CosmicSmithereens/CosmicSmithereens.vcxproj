@@ -51,13 +51,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(SolutionDir)packages\VisualLeakDetector.2.5.0.0\lib\native\address-model-64\;$(SolutionDir)..\..\spdlog\build\Debug;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir);$(SolutionDir)packages\VisualLeakDetector.2.5.0.0\lib\native\include;$(SolutionDir)..\..\spdlog\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)packages\VisualLeakDetector.2.5.0.0\lib\native\address-model-64\;$(SolutionDir)..\..\spdlog\build\Debug;$(LibraryPath);$(SolutionDir)..\..\SDL\build\$(Configuration);$(SolutionDir)..\..\SDL2\lib\</LibraryPath>
+    <IncludePath>$(ProjectDir);$(SolutionDir)packages\VisualLeakDetector.2.5.0.0\lib\native\include;$(SolutionDir)..\..\spdlog\include;$(SolutionDir)..\..\string_theory\include;$(SolutionDir)..\..\SDL2\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(SolutionDir)packages\VisualLeakDetector.2.5.0.0\lib\native\address-model-64\;$(SolutionDir)..\..\spdlog\build\Release;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir);$(SolutionDir)packages\VisualLeakDetector.2.5.0.0\lib\native\include;$(SolutionDir)..\..\spdlog\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)packages\VisualLeakDetector.2.5.0.0\lib\native\address-model-64\;$(SolutionDir)..\..\spdlog\build\Release;$(LibraryPath);$(SolutionDir)..\..\SDL\build\$(Configuration);$(SolutionDir)..\..\SDL2\lib\</LibraryPath>
+    <IncludePath>$(ProjectDir);$(SolutionDir)packages\VisualLeakDetector.2.5.0.0\lib\native\include;$(SolutionDir)..\..\spdlog\include;$(SolutionDir)..\..\string_theory\include;$(SolutionDir)..\..\SDL2\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -67,12 +67,11 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <LanguageStandard>Default</LanguageStandard>
-      <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>vld.lib;spdlogd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vld.lib;spdlogd.lib;SDL2d.lib;SDL2maind.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -85,14 +84,13 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <LanguageStandard>Default</LanguageStandard>
-      <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>vld.lib;spdlog.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vld.lib;spdlog.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

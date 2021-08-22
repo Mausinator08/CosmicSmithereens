@@ -33,3 +33,5 @@
 
 # Excluded folders
 .vs/
+build/
+CMakeFiles/

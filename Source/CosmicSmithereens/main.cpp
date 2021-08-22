@@ -2,23 +2,16 @@
 
 #include "CApp.h"
 
-#if defined(_UNICODE)
+#include <SDL.h>
 
-/*!
- *  The unicode main entry point for Windows GUI applications.
- *
- *      @param [in] hInstance     
- *      @param [in] hPrevInstance 
- *      @param [in] lpCmdLine     
- *      @param [in] nShowCmd      
- *
- *      @return Result of running the application
+
+/**
+ * @brief 
+ * @param argc
+ * @param argv
+ * @return 
  */
-int WINAPI wWinMain(
-    _In_ HINSTANCE hInstance,
-    _In_opt_ HINSTANCE hPrevInstance,
-    _In_ LPWSTR lpCmdLine,
-    _In_ int nShowCmd)
+int main(int argc, char** argv)
 {
 	// Creates (instantiates) the game with the applicaiton
 	// name of "CosmicSmithereens".
@@ -36,5 +29,3 @@ int WINAPI wWinMain(
 
     return 0;
 }
-
-#endif

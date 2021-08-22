@@ -81,14 +81,11 @@ extern const int iTRANSPARENT;
 
 // Data measurements
 extern const int MEGABYTE;
+extern const float ONEFOURTYFOUR_HERTZ;
+extern const float ONETWENTY_HERTZ;
 extern const float NINTY_HERTZ;
 extern const float SIXTY_HERTZ;
 extern const float THIRTY_HERTZ;
-
-// Frames Per Second to Hertz
-float ConvertFPSToHertz(float fps);
-// Hertz to Frames Per Second
-float ConvertHertzToFPS(float hertz);
 
 // Smart pointer manipulation
 template<class T>

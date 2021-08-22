@@ -1,12 +1,11 @@
 #pragma once
 
-#pragma region Forward Declarations
-
-class CWindowsSystem;
-
-#pragma endregion
-
-class CApp 
+/*!
+ * @brief 
+ * @author 
+ * @since Wed Aug 18 2021
+ */
+class CApp
 {
 private:
 #pragma region Constructors
@@ -54,7 +53,7 @@ public:
 	 *
 	 *      @return The system.
 	 */
-	CWindowsSystem* const GetSystem() const;
+	//CWindowsSystem* const GetSystem() const;
 	/*!
 	 *  Returns true if the app is terminating.
 	 *
@@ -115,9 +114,6 @@ public:
 #pragma endregion
 
 private:
-#pragma region System Components
-	std::shared_ptr <CWindowsSystem> m_pSystem;
-#pragma endregion
 
 #pragma region Control Members
 	bool m_bTerminate;
