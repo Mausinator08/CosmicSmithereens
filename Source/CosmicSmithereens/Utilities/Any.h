@@ -7,7 +7,7 @@ class Any : public IAny
 {
 public:
 
-	/*!
+	/**
 	 *  Copy Constructor (Explicit).
 	 *
 	 *      @param [in] data 
@@ -17,12 +17,12 @@ public:
 
 	}
 
-	/*!
+	/**
 	 *  Constructor.
 	 */
 	Any() {}
 
-	/*!
+	/**
 	 *  Operator=s the any.
 	 *
 	 *      @param [in] any 
@@ -34,7 +34,7 @@ public:
 		return dynamic_cast<Any<T>&>(*any).m_data;
 	}
 
-	/*!
+	/**
 	 *  Operator=s the any.
 	 *
 	 *      @param [in] data 
@@ -46,7 +46,7 @@ public:
 		return std::make_unique<IAny>().reset(new Any<T>(data));
 	}
 
-	/*!
+	/**
 	 *  The value of the templated type.
 	 */
 	T m_data;
