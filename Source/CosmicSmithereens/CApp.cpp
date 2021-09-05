@@ -165,22 +165,24 @@ bool CApp::Initialize()
 	// Initialize the SDL2 system.
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
-		if (SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags::SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT | SDL_MessageBoxFlags::SDL_MESSAGEBOX_ERROR, "FATAL", SDL_GetError(), nullptr) < 0)
-		{
-			std::cout << "Could not initialize SDL2 with SDL_INIT_VIDEO!" << SDL_GetError() << std::endl;
-		}
+		std::cout << "Could not initialize SDL2 with SDL_INIT_VIDEO!" << SDL_GetError() << std::endl;
 
 		return false;
 	}
 
-	m_pWindow = SDL_CreateWindow(m_applicationName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_SHOWN);
+	m_pWindow = SDL_CreateWindow(
+		m_applicationName.c_str(), 
+		SDL_WINDOWPOS_CENTERED, 
+		SDL_WINDOWPOS_CENTERED, 
+		1280, 
+		720, 
+		SDL_WINDOW_SHOWN | 
+		SDL_WINDOW_ALLOW_HIGHDPI
+		);
 
 	if (!m_pWindow)
 	{
-		if (SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags::SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT | SDL_MessageBoxFlags::SDL_MESSAGEBOX_ERROR, "FATAL", SDL_GetError(), nullptr) < 0)
-		{
-			std::cout << "Could not create SDL2 window!" << SDL_GetError() << std::endl;
-		}
+		std::cout << "Could not create SDL2 window!" << SDL_GetError() << std::endl;
 
 		return false;
 	}
