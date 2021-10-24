@@ -4,11 +4,11 @@
 
 bool Debugging::IsDebugBuild()
 {
-#if defined(_DEBUG)
+#if !defined(NDEBUG)
 
 	return true;
 
-#elif !defined(_DEBUG)
+#elif defined(NDEBUG)
 
 	return false;
 

@@ -6,16 +6,23 @@ enable_testing()
 
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 
-add_compile_options(-m64)
+add_compile_options(-m64 -fpermissive -Wunknown-pragmas)
 
-include_directories("Source/CosmicSmithereens" "../3rdParty/SDL2/${CMAKE_BUILD_TYPE}/include/SDL2" "../3rdParty/spdlog/${CMAKE_BUILD_TYPE}/include")
-link_directories("../3rdParty/SDL2/${CMAKE_BUILD_TYPE}/lib" "../3rdParty/spdlog/${CMAKE_BUILD_TYPE}/lib")
+file(TO_CMAKE_PATH $ENV{ReposDir} ReposDir)
+file(TO_CMAKE_PATH $ENV{3rdPartyDir} 3rdPartyDir)
+
+include_directories(Source/CosmicSmithereens ${3rdPartyDir}/SDL2/${CMAKE_BUILD_TYPE}/include/SDL2 ${3rdPartyDir}/spdlog/${CMAKE_BUILD_TYPE}/include
+${3rdPartyDir}/MemPlumber/${CMAKE_BUILD_TYPE}/include ${3rdPartyDir}/cwalk/${CMAKE_BUILD_TYPE}/include)
+link_directories(${3rdPartyDir}/SDL2/${CMAKE_BUILD_TYPE}/lib ${3rdPartyDir}/spdlog/${CMAKE_BUILD_TYPE}/lib ${3rdPartyDir}/MemPlumber/${CMAKE_BUILD_TYPE}/lib
+${3rdPartyDir}/cwalk/${CMAKE_BUILD_TYPE}/lib)
 
 add_library(pch Source/CosmicSmithereens/stdafx.cpp Source/CosmicSmithereens/stdafx.h)
 
-include(../cmake-precompiled-header/PrecompiledHeader.cmake)
+include(${ReposDir}/cmake-precompiled-header/PrecompiledHeader.cmake)
 
 add_precompiled_header(pch Source/CosmicSmithereens/stdafx.h FORCEINCLUDE)
+
+link_libraries(memplumber cwalk)
 
 if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
     link_libraries(mingw32)
@@ -51,7 +58,11 @@ elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
 endif()
 
 include(GNUInstallDirs)
-install(FILES "../3rdParty/SDL2/${CMAKE_BUILD_TYPE}/bin/SDL2d.dll" DESTINATION bin/${CMAKE_BUILD_TYPE})
+if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    install(FILES ${3rdPartyDir}/SDL2/${CMAKE_BUILD_TYPE}/bin/SDL2d.dll DESTINATION bin/${CMAKE_BUILD_TYPE})
+else()
+    install(FILES ${3rdPartyDir}/SDL2/${CMAKE_BUILD_TYPE}/bin/SDL2.dll DESTINATION bin/${CMAKE_BUILD_TYPE})
+endif()
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

@@ -12,7 +12,7 @@
 			"preLaunchTask": "Install Debug",
 			"args": [],
 			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
+			"cwd": "${workspaceFolder}/build/bin/Debug/",
 			"environment": [],
 			"console": "internalConsole",
 			"miDebuggerPath": "G:/msys64/mingw64/bin/gdb.exe"
@@ -25,7 +25,7 @@
 			"preLaunchTask": "Install Release",
 			"args": [],
 			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
+			"cwd": "${workspaceFolder}/build/bin/Release/",
 			"environment": [],
 			"console": "internalConsole"
 		},
@@ -37,7 +37,7 @@
 			"preLaunchTask": "Install RelWithDebInfo",
 			"args": [],
 			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
+			"cwd": "${workspaceFolder}/build/bin/RelWithDebInfo/",
 			"environment": [],
 			"console": "internalConsole",
 			"miDebuggerPath": "G:/msys64/mingw64/bin/gdb.exe"
@@ -50,7 +50,7 @@
 			"preLaunchTask": "Install MinSizeRel",
 			"args": [],
 			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
+			"cwd": "${workspaceFolder}/build/bin/MinSizeRel/",
 			"environment": [],
 			"console": "internalConsole"
 		}

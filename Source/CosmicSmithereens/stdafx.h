@@ -1,16 +1,13 @@
 // std
+#include <iostream>
 #include <cstdlib>
 #include <cstdio>
-#include <iostream>
 #include <string>
 #include <map>
 #include <list>
 #include <deque>
 #include <queue>
-
-// windows debugging
-#define _CRTDBG_MAP_ALLOC
-#include <crtdbg.h>
+#include <regex>
 
 // Math header
 #include <cmath>
@@ -18,16 +15,8 @@
 // Smart Pointers
 #include <memory>
 
-// Windows
-#include <tchar.h>
-#include <string.h>
-#include <Windows.h>
-#include <windowsx.h>
-#include <objbase.h>
-#include <mmsystem.h>
-
-#include <codecvt>
-#include <locale>
+// cwalk
+#include <cwalk.h>
 
 // Macros for commonly and frequently used pointer delete/release code.
 #ifndef SAFE_DELETE
