@@ -19,6 +19,8 @@ An example game while building the Mausinator Games Kit.
 -   `SDL2` from [https://github.com/libsdl-org/SDL](https://github.com/libsdl-org/SDL)
 -   `spdlog` (v1.x from source) from [https://github.com/gabime/spdlog.git](https://github.com/gabime/spdlog.git)
 -   At least a community license for `SyncFusion` for C# WinForms for the game editor. (not yet implemented)
+-   `CWalk` from [https://github.com/likle/cwalk](https://github.com/likle/cwalk)
+-   `memplumber` for memory leak detection from [https://github.com/seladb/MemPlumber](https://github.com/seladb/MemPlumber)
 
 ## Latest releases
 
