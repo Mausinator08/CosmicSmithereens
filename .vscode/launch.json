@@ -6,7 +6,7 @@
 	"configurations": [
 		{
 			"name": "(Windows) Launch Debug",
-			"type": "cppvsdbg",
+			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/build/bin/Debug/CosmicSmithereens.exe",
 			"preLaunchTask": "Install Debug",
@@ -14,12 +14,22 @@
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/build/bin/Debug/",
 			"environment": [],
-			"console": "internalConsole",
-			"miDebuggerPath": "G:/msys64/mingw64/bin/gdb.exe"
+			"internalConsoleOptions": "openOnSessionStart",
+			"avoidWindowsConsoleRedirection": true,
+			"externalConsole": false,
+			"miDebuggerPath": "G:/msys64/mingw64/bin/gdb.exe",
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			]
 		},
 		{
 			"name": "(Windows) Launch Release",
-			"type": "cppvsdbg",
+			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/build/bin/Release/CosmicSmithereens.exe",
 			"preLaunchTask": "Install Release",
@@ -27,11 +37,12 @@
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/build/bin/Release/",
 			"environment": [],
-			"console": "internalConsole"
+			"internalConsoleOptions": "openOnSessionStart",
+			"externalConsole": false
 		},
 		{
 			"name": "(Windows) Launch RelWithDebInfo",
-			"type": "cppvsdbg",
+			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/build/bin/RelWithDebInfo/CosmicSmithereens.exe",
 			"preLaunchTask": "Install RelWithDebInfo",
@@ -39,12 +50,24 @@
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/build/bin/RelWithDebInfo/",
 			"environment": [],
-			"console": "internalConsole",
-			"miDebuggerPath": "G:/msys64/mingw64/bin/gdb.exe"
+			"internalConsoleOptions": "openOnSessionStart",
+			"externalConsole": false,
+			"miDebuggerPath": "G:/msys64/mingw64/bin/gdb.exe",
+			"MIMode": "gdb",
+			"sourceFileMap": {
+				"${workspaceFolder}/Source/": "${workspaceFolder}/build/bin/RelWithDebInfo/"
+			},
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			]
 		},
 		{
 			"name": "(Windows) Launch MinSizeRel",
-			"type": "cppvsdbg",
+			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/build/bin/MinSizeRel/CosmicSmithereens.exe",
 			"preLaunchTask": "Install MinSizeRel",
@@ -52,7 +75,8 @@
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/build/bin/MinSizeRel/",
 			"environment": [],
-			"console": "internalConsole"
+			"internalConsoleOptions": "openOnSessionStart",
+			"externalConsole": false
 		}
 	]
 }

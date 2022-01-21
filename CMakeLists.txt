@@ -13,12 +13,13 @@ file(TO_CMAKE_PATH $ENV{3rdPartyDir} 3rdPartyDir)
 
 include_directories(Source/CosmicSmithereens ${3rdPartyDir}/SDL2/${CMAKE_BUILD_TYPE}/include/SDL2 ${3rdPartyDir}/spdlog/${CMAKE_BUILD_TYPE}/include
 ${3rdPartyDir}/MemPlumber/${CMAKE_BUILD_TYPE}/include ${3rdPartyDir}/cwalk/${CMAKE_BUILD_TYPE}/include)
+
 link_directories(${3rdPartyDir}/SDL2/${CMAKE_BUILD_TYPE}/lib ${3rdPartyDir}/spdlog/${CMAKE_BUILD_TYPE}/lib ${3rdPartyDir}/MemPlumber/${CMAKE_BUILD_TYPE}/lib
 ${3rdPartyDir}/cwalk/${CMAKE_BUILD_TYPE}/lib)
 
 add_library(pch Source/CosmicSmithereens/stdafx.cpp Source/CosmicSmithereens/stdafx.h)
 
-include(${ReposDir}/cmake-precompiled-header/PrecompiledHeader.cmake)
+include(${3rdPartyDir}/cmake-precompiled-header/PrecompiledHeader.cmake)
 
 add_precompiled_header(pch Source/CosmicSmithereens/stdafx.h FORCEINCLUDE)
 
@@ -29,7 +30,8 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 endif()
 
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-    add_compile_options(-Wall -g)
+    add_compile_options(-Wall -g -O0)
+    add_compile_definitions(_DEBUG)
     link_libraries(SDL2maind SDL2d spdlogd)
 elseif(${CMAKE_BUILD_TYPE} STREQUAL "RelWithDebInfo")
     add_compile_options(-O2 -g)

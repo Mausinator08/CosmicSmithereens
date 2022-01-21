@@ -1,22 +1,66 @@
 {
-    "configurations": [
-        {
-            "name": "Win32",
-            "includePath": [
-                "${workspaceFolder}/**"
-            ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE"
-            ],
-            "windowsSdkVersion": "10.0.20348.0",
-            "compilerPath": "G:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\Hostx64\\x64\\cl.exe",
-            "cStandard": "c17",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "windows-msvc-x64",
-            "configurationProvider": "ms-vscode.cmake-tools"
-        }
-    ],
-    "version": 4
+	"configurations": [
+		{
+			"name": "Windows-Debug",
+			"includePath": ["${workspaceFolder}/**"],
+			"defines": ["_DEBUG"],
+			"windowsSdkVersion": "10.0.20348.0",
+			"compilerPath": "G:\\msys64\\mingw64\\bin\\gcc.exe",
+			"cStandard": "c17",
+			"cppStandard": "c++17",
+			"intelliSenseMode": "windows-gcc-x64",
+			"configurationProvider": "ms-vscode.cmake-tools",
+			"compilerArgs": [
+				"-m64",
+				"-fpermissive",
+				"-Wunknown-pragmas",
+				"-Wall",
+				"-g",
+				"-O0"
+			]
+		},
+		{
+			"name": "Windows-RelWithDebInfo",
+			"includePath": ["${workspaceFolder}/**"],
+			"defines": ["NDEBUG"],
+			"windowsSdkVersion": "10.0.20348.0",
+			"compilerPath": "G:\\msys64\\mingw64\\bin\\gcc.exe",
+			"cStandard": "c17",
+			"cppStandard": "c++17",
+			"intelliSenseMode": "windows-gcc-x64",
+			"configurationProvider": "ms-vscode.cmake-tools",
+			"compilerArgs": [
+				"-m64",
+				"-fpermissive",
+				"-Wunknown-pragmas",
+				"-g",
+				"-O2"
+			]
+		},
+		{
+			"name": "Windows-MinSizeRel",
+			"includePath": ["${workspaceFolder}/**"],
+			"defines": ["NDEBUG"],
+			"windowsSdkVersion": "10.0.20348.0",
+			"compilerPath": "G:\\msys64\\mingw64\\bin\\gcc.exe",
+			"cStandard": "c17",
+			"cppStandard": "c++17",
+			"intelliSenseMode": "windows-gcc-x64",
+			"configurationProvider": "ms-vscode.cmake-tools",
+			"compilerArgs": ["-m64", "-fpermissive", "-Wunknown-pragmas", "-Os"]
+		},
+		{
+			"name": "Windows-Release",
+			"includePath": ["${workspaceFolder}/**"],
+			"defines": ["NDEBUG"],
+			"windowsSdkVersion": "10.0.20348.0",
+			"compilerPath": "G:\\msys64\\mingw64\\bin\\gcc.exe",
+			"cStandard": "c17",
+			"cppStandard": "c++17",
+			"intelliSenseMode": "windows-gcc-x64",
+			"configurationProvider": "ms-vscode.cmake-tools",
+			"compilerArgs": ["-m64", "-fpermissive", "-Wunknown-pragmas", "-O3"]
+		}
+	],
+	"version": 4
 }

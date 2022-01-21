@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
 	try
 	{
-		if (!FSPlatform::MakeDirectory(FSPlatform::ConvertToPathStyle("Logs/")))
+		if (!FSPlatform::MakeDirectory("Logs/"))
 		{
 			std::cout << "Could not create directory \"Logs/\"!" << std::endl;
 		}

@@ -171,14 +171,13 @@ bool CApp::Initialize()
 	}
 
 	m_pWindow = SDL_CreateWindow(
-		m_applicationName.c_str(), 
-		SDL_WINDOWPOS_CENTERED, 
-		SDL_WINDOWPOS_CENTERED, 
-		1280, 
-		720, 
-		SDL_WINDOW_SHOWN | 
-		SDL_WINDOW_ALLOW_HIGHDPI
-		);
+		m_applicationName.c_str(),
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
+		1280,
+		720,
+		SDL_WINDOW_SHOWN |
+			SDL_WINDOW_ALLOW_HIGHDPI);
 
 	if (!m_pWindow)
 	{

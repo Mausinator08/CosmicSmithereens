@@ -55,12 +55,12 @@ bool FSPlatform::MakeDirectory(const std::string path)
     {
     case PathStylesEnum::WINDOWS:
     {
-        return CreateDirectoryA(finalPath.c_str(), NULL);
+        return CreateDirectoryA(finalPath.c_str(), NULL) != 0 ? true : (GetLastError() == ERROR_ALREADY_EXISTS ? true : false);
     }
     break;
     case PathStylesEnum::UNIX:
     {
-        return mkdir(finalPath.c_str()) != -1 ? true : false;
+        return mkdir(finalPath.c_str()) != -1 ? true : (errno == EEXIST ? true : false);
     }
     break;
     default:
