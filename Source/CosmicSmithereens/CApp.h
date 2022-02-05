@@ -5,8 +5,8 @@ class SDL_Window;
 #pragma endregion
 
 /**
- * @brief 
- * @author 
+ * @brief This is the root of the application.
+ * @author John Patrick Maus
  * @since Wed Aug 18 2021
  */
 class CApp
@@ -96,30 +96,59 @@ public:
 	 *  Destroys the app.
 	 */
 	static void DestroyApp();
+
+	/**
+  * @brief Calls m_pInstance->Quit()
+  * @return (void)
+  */
+	static void QuitApp();
+
+	/**
+  * @brief Calls m_pInstance->PromptQuit()
+  * @return (void)
+  */
+	static void PromptQuitApp();
+
+	/**
+  * @brief Calls m_pInstance->IsTerminating()
+  * @return bool
+  */
+	static bool IsAppTerminating();
 #pragma endregion
 
 #pragma region CApp Member Functions
 protected:
 	/**
-	 *  Initializes the app.
-	 *
-	 *      @return True if successfull. False if not.
+	 *  @brief Initializes the app.
+	 *  @return True if successfull. False if not.
 	 */
 	bool Initialize();
 	/**
-	 *  Updates the app.
+	 *  @brief Updates the app.
 	 */
 	void Update();
 	/**
-	 *  Shutdown the app.
+	 *  @brief Shutdown the app.
 	 */
 	void Shutdown();
 
 public:
 	/**
-	 *  Runs the app instance.
+	 *  @brief Runs the app instance.
 	 */
 	void Run();
+
+	/**
+	 * @brief Signals to shutdown.
+	 * @return (void)
+	 */
+	void Quit();
+
+	/**
+	 * @brief Displays the quite prompt before shutting down.
+	 * @return (void)
+	 */
+	void PromptQuit();
 #pragma endregion
 
 private:

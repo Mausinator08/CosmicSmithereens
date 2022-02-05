@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "CApp.h"
+#include "UI/Dialog.h"
 
 #include <SDL.h>
 
@@ -155,6 +156,21 @@ void CApp::DestroyApp()
 	m_pInstance.reset();
 }
 
+bool CApp::IsAppTerminating()
+{
+	return m_pInstance->IsTerminating();
+}
+
+void CApp::QuitApp()
+{
+	m_pInstance->Quit();
+}
+
+void CApp::PromptQuitApp()
+{
+	m_pInstance->PromptQuit();
+}
+
 /**
  *  Initializes the app.
  *
@@ -202,7 +218,7 @@ void CApp::Update()
 	{
 		if (event.type == SDL_QUIT)
 		{
-			m_bTerminate = true;
+			PromptQuit();
 		}
 	}
 
@@ -243,4 +259,20 @@ void CApp::Run()
 
 	// Release all resources.
 	Shutdown();
+}
+
+void CApp::Quit()
+{
+	m_bTerminate = true;
+}
+
+void CApp::PromptQuit()
+{
+	int iQuitting = ShowPrompt("QUIT?", "Are you sure you want to quit?");
+
+	if (iQuitting == PROMPT_USER_RESONSE::YES)
+	{
+		m_bTerminate = true;
+		return;
+	}
 }

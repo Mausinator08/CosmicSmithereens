@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "CApp.h"
+#include "UI/Dialog.h"
 
 #include "memplumber.h"
 #include "Debugging/Debug.h"
@@ -19,18 +20,18 @@ int main(int argc, char *argv[])
 
 	try
 	{
-		if (!FSPlatform::MakeDirectory("Logs/"))
+		if (!MakeDirectory("Logs/"))
 		{
 			std::cout << "Could not create directory \"Logs/\"!" << std::endl;
 		}
 
-		MemPlumber::start(Debugging::IsDebugBuild(), FSPlatform::ConvertToPathStyle("Logs/memleaks-verbose.log").c_str());
+		MemPlumber::start(Debugging::IsDebugBuild(), ConvertToPathStyle("Logs/memleaks-verbose.log").c_str());
 
 		// Creates (instantiates) the game with the applicaiton
 		// name of "CosmicSmithereens".
 		if (!CApp::CreateApp("CosmicSmithereens"))
 		{
-			std::cout << "Could not create application!" << std::endl;
+			ShowFatalDialog("Could not create application!");
 			// If unsuccessfull then return 0.
 			return 0;
 		}
@@ -43,14 +44,17 @@ int main(int argc, char *argv[])
 	}
 	catch (_exception e)
 	{
-		std::cout << printf_s("Error: %s\nError Type: %s", e.name, e.type) << std::endl;
+		char *error_type = NULL;
+		_itoa(e.type, error_type, 10);
+
+		ShowFatalDialog(std::string().append("Error: ").append(e.name).append("\nError Type: ").append(error_type).append("\n").c_str());
 
 		returnVal = e.retval;
 	}
 
 	size_t count = 0;
 	uint64_t size = 0;
-	MemPlumber::memLeakCheck(count, size, Debugging::IsDebugBuild(), FSPlatform::ConvertToPathStyle("Logs/memleaks-verbose.log").c_str());
+	MemPlumber::memLeakCheck(count, size, Debugging::IsDebugBuild(), ConvertToPathStyle("Logs/memleaks-verbose.log").c_str());
 
 	if (Debugging::IsDebugBuild() == true)
 	{

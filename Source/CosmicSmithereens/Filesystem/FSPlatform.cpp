@@ -4,28 +4,28 @@
 #include "windows.h"
 #include "sys/stat.h"
 
-FSPlatform::PathStylesEnum FSPlatform::PathStyle()
+PathStylesEnum PathStyle()
 {
     switch (cwk_path_get_style())
     {
     case cwk_path_style::CWK_STYLE_WINDOWS:
     {
-        return FSPlatform::PathStylesEnum::WINDOWS;
+        return PathStylesEnum::WINDOWS;
     }
     break;
     case cwk_path_style::CWK_STYLE_UNIX:
     {
-        return FSPlatform::PathStylesEnum::UNIX;
+        return PathStylesEnum::UNIX;
     }
     default:
     {
-        return FSPlatform::PathStylesEnum::UNKNOWN;
+        return PathStylesEnum::UNKNOWN;
     }
     break;
     }
 }
 
-const std::string FSPlatform::ConvertToPathStyle(const std::string path)
+const std::string ConvertToPathStyle(const std::string path)
 {
     switch (PathStyle())
     {
@@ -47,7 +47,7 @@ const std::string FSPlatform::ConvertToPathStyle(const std::string path)
     }
 }
 
-bool FSPlatform::MakeDirectory(const std::string path)
+bool MakeDirectory(const std::string path)
 {
     std::string finalPath = ConvertToPathStyle(path);
 
