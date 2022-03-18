@@ -1,3 +1,11 @@
 {
-	"C_Cpp.errorSquiggles": "Enabled"
+	"C_Cpp.errorSquiggles": "Enabled",
+	"cmake.configureOnOpen": true,
+	"C_Cpp.intelliSenseEngine": "Default",
+	"cmake.debugConfig": {
+		"externalConsole": false,
+		"logging": {
+			"programOutput": true
+		}
+	}
 }

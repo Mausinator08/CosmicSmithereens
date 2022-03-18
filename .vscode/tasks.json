@@ -1,4 +1,57 @@
 {
 	"version": "2.0.0",
-	"tasks": []
+	"tasks": [
+		{
+			"label": "Install Debug",
+			"type": "shell",
+			"command": "cmake",
+			"args": [
+				"--install",
+				"build",
+				"--config",
+				"Debug",
+				"--prefix",
+				"build"
+			]
+		},
+		{
+			"label": "Install Release",
+			"type": "shell",
+			"command": "cmake",
+			"args": [
+				"--install",
+				"build",
+				"--config",
+				"Release",
+				"--prefix",
+				"build"
+			]
+		},
+		{
+			"label": "Install RelWithDebInfo",
+			"type": "shell",
+			"command": "cmake",
+			"args": [
+				"--install",
+				"build",
+				"--config",
+				"RelWithDebInfo",
+				"--prefix",
+				"build"
+			]
+		},
+		{
+			"label": "Install MinSizeRel",
+			"type": "shell",
+			"command": "cmake",
+			"args": [
+				"--install",
+				"build",
+				"--config",
+				"MinSizeRel",
+				"--prefix",
+				"build"
+			]
+		}
+	]
 }

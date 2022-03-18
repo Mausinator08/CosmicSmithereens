@@ -6,37 +6,65 @@ enable_testing()
 
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 
-add_compile_options(-m64 -mwindows)
+add_compile_options(-m64 -fpermissive -Wunknown-pragmas)
 
-include_directories("Source/CosmicSmithereens" "../3rdParty/SDL2/${CMAKE_BUILD_TYPE}/include/SDL2" "../3rdParty/spdlog/${CMAKE_BUILD_TYPE}/include")
-link_directories("../3rdParty/SDL2/${CMAKE_BUILD_TYPE}/lib" "../3rdParty/spdlog/${CMAKE_BUILD_TYPE}/lib")
+file(TO_CMAKE_PATH $ENV{ReposDir} ReposDir)
+file(TO_CMAKE_PATH $ENV{3rdPartyDir} 3rdPartyDir)
+
+include_directories(Source/CosmicSmithereens ${3rdPartyDir}/SDL2/${CMAKE_BUILD_TYPE}/include/SDL2 ${3rdPartyDir}/spdlog/${CMAKE_BUILD_TYPE}/include
+${3rdPartyDir}/MemPlumber/${CMAKE_BUILD_TYPE}/include ${3rdPartyDir}/cwalk/${CMAKE_BUILD_TYPE}/include)
+
+link_directories(${3rdPartyDir}/SDL2/${CMAKE_BUILD_TYPE}/lib ${3rdPartyDir}/spdlog/${CMAKE_BUILD_TYPE}/lib ${3rdPartyDir}/MemPlumber/${CMAKE_BUILD_TYPE}/lib
+${3rdPartyDir}/cwalk/${CMAKE_BUILD_TYPE}/lib)
 
 add_library(pch Source/CosmicSmithereens/stdafx.cpp Source/CosmicSmithereens/stdafx.h)
 
-include(../cmake-precompiled-header/PrecompiledHeader.cmake)
+include(${3rdPartyDir}/cmake-precompiled-header/PrecompiledHeader.cmake)
 
 add_precompiled_header(pch Source/CosmicSmithereens/stdafx.h FORCEINCLUDE)
 
+link_libraries(memplumber cwalk)
+
+if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+    link_libraries(mingw32)
+endif()
+
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-    add_compile_options(-Wall -g)
-    link_libraries(mingw32 SDL2maind SDL2d spdlogd)
+    add_compile_options(-Wall -g -O0)
+    add_compile_definitions(_DEBUG)
+    link_libraries(SDL2maind SDL2d spdlogd)
 elseif(${CMAKE_BUILD_TYPE} STREQUAL "RelWithDebInfo")
     add_compile_options(-O2 -g)
     add_compile_definitions(NDEBUG)
-    link_libraries(mingw32 SDL2main SDL2 spdlog)
+    link_libraries(SDL2main SDL2 spdlog)
 elseif(${CMAKE_BUILD_TYPE} STREQUAL "MinSizeRel")
     add_compile_options(-Os)
     add_compile_definitions(NDEBUG)
-    link_libraries(mingw32 SDL2main SDL2 spdlog)
+    link_libraries(SDL2main SDL2 spdlog)
 elseif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
     add_compile_options(-O3)
     add_compile_definitions(NDEBUG)
-    link_libraries(mingw32 SDL2main SDL2 spdlog)
+    link_libraries(SDL2main SDL2 spdlog)
 endif()
 
 file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS Source/CosmicSmithereens/*.cpp)
 
-add_executable(CosmicSmithereens ${SRC_FILES})
+if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+    add_compile_options(-mwindows)
+    add_executable(CosmicSmithereens WIN32 ${SRC_FILES})
+    target_link_options(CosmicSmithereens PRIVATE -mwindows)
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    add_executable(CosmicSmithereens UNIX ${SRC_FILES})
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+    add_executable(CosmicSmithereens APPLE ${SRC_FILES})
+endif()
+
+include(GNUInstallDirs)
+if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    install(FILES ${3rdPartyDir}/SDL2/${CMAKE_BUILD_TYPE}/bin/SDL2d.dll DESTINATION bin/${CMAKE_BUILD_TYPE})
+else()
+    install(FILES ${3rdPartyDir}/SDL2/${CMAKE_BUILD_TYPE}/bin/SDL2.dll DESTINATION bin/${CMAKE_BUILD_TYPE})
+endif()
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
