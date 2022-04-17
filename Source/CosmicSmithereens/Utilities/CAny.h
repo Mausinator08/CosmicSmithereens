@@ -3,7 +3,7 @@
 #include "IAny.h"
 
 template<class T>
-class Any : public IAny
+class CAny : public IAny
 {
 public:
 
@@ -12,7 +12,7 @@ public:
 	 *
 	 *      @param [in] data 
 	 */
-	explicit Any(const T& data) : m_data(data)
+	explicit CAny(const T& data) : m_data(data)
 	{
 
 	}
@@ -20,7 +20,7 @@ public:
 	/**
 	 *  Constructor.
 	 */
-	Any() {}
+	CAny() {}
 
 	/**
 	 *  Operator=s the any.
@@ -31,7 +31,7 @@ public:
 	 */
 	T operator=(const std::unique_ptr<IAny> any)
 	{
-		return dynamic_cast<Any<T>&>(*any).m_data;
+		return dynamic_cast<CAny<T>&>(*any).m_data;
 	}
 
 	/**
@@ -43,7 +43,7 @@ public:
 	 */
 	std::unique_ptr<IAny> operator=(T data)
 	{
-		return std::make_unique<IAny>().reset(new Any<T>(data));
+		return std::make_unique<IAny>().reset(new CAny<T>(data));
 	}
 
 	/**
@@ -55,11 +55,11 @@ public:
 template<class T>
 bool operator==(T lhs, const std::unique_ptr<IAny> rhs)
 {
-	return lhs == dynamic_cast<Any<T>&>(*rhs).m_data ? true : false;
+	return lhs == dynamic_cast<CAny<T>&>(*rhs).m_data ? true : false;
 }
 
 template<class T>
 bool operator==(const std::unique_ptr<IAny> lhs, T rhs)
 {
-	return rhs == dynamic_cast<Any<T>&>(*lhs).m_data ? true : false;
+	return rhs == dynamic_cast<CAny<T>&>(*lhs).m_data ? true : false;
 }
