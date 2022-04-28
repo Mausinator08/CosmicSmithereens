@@ -7,5 +7,7 @@
 		"logging": {
 			"programOutput": true
 		}
-	}
+	},
+	"testMate.cpp.test.workingDirectory": "${workspaceFolder}",
+	"testMate.cpp.test.executables": "{build,Build,BUILD,out,Out,OUT}/**/{test,Test,TEST}_*"
 }
