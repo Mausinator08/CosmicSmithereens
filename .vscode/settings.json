@@ -9,5 +9,9 @@
 		}
 	},
 	"testMate.cpp.test.workingDirectory": "${workspaceFolder}",
-	"testMate.cpp.test.executables": "{build,Build,BUILD,out,Out,OUT}/**/{test,Test,TEST}_*"
+	"testMate.cpp.test.executables": "{build,Build,BUILD,out,Out,OUT}/**/{test,Test,TEST}*.exe",
+	"testMate.cpp.discovery.gracePeriodForMissing": 10,
+	"testMate.cpp.discovery.strictPattern": true,
+	"cmake.buildTask": true,
+	"cmake.setBuildTypeOnMultiConfig": true
 }

@@ -3,8 +3,7 @@
         {
             "name": "Windows-Debug",
             "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/Source/CosmicSmithereens"
+                "${workspaceFolder}/**"
             ],
             "defines": [
                 "_DEBUG"

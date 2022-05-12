@@ -77,9 +77,15 @@
 			"xtr1common": "cpp",
 			"xtree": "cpp",
 			"xutility": "cpp",
-			"bitset": "cpp"
+			"bitset": "cpp",
+			"regex": "cpp",
+			"variant": "cpp",
+			"set": "cpp",
+			"any": "cpp",
+			"iomanip": "cpp"
 		},
 		"testMate.cpp.test.workingDirectory": "${workspaceFolder}",
-		"testMate.cpp.test.executables": "{build,Build,BUILD,out,Out,OUT}/**/{test,Test,TEST}_*"
+		"testMate.cpp.test.executables": "{build,Build,BUILD,out,Out,OUT}/**/{test,Test,TEST}*",
+		"cmake.buildTask": true
 	}
 }
