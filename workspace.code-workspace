@@ -86,6 +86,7 @@
 		},
 		"testMate.cpp.test.workingDirectory": "${workspaceFolder}",
 		"testMate.cpp.test.executables": "{build,Build,BUILD,out,Out,OUT}/**/{test,Test,TEST}*",
-		"cmake.buildTask": true
+		"cmake.buildTask": true,
+		"debug.internalConsoleOptions": "neverOpen"
 	}
 }

@@ -77,7 +77,7 @@ namespace NSTypes
 
                 for (size_t i = 1; i < FCount(); ++i)
                 {
-                    tempItems[i - 1] = TItem();
+                    tempItems[i - 1] = new TItem();
                     tempItems[i - 1]->FSet(m_items[i]->FGet());
                 }
 
@@ -88,8 +88,8 @@ namespace NSTypes
 
                 for (size_t i = 0; i < tempCount; ++i)
                 {
-                    m_items[i] = TItem();
-                    m_items[i].FSet(tempItems[i]->FGet());
+                    m_items[i] = new TItem();
+                    m_items[i]->FSet(tempItems[i]->FGet());
                 }
 
                 if (FCount())
@@ -228,7 +228,7 @@ namespace NSTypes
                         for (size_t j = 0; j < tempCount; ++j)
                         {
                             m_items[j] = new TItem();
-                            m_items[j]->FSet(tempItems[j]-FGet());
+                            m_items[j]->FSet(tempItems[j]->FGet());
                         }
 
                         if (FCount())
@@ -354,7 +354,7 @@ namespace NSTypes
 
                     if (activeIndex == index)
                     {
-                        itemOut = &(m_items[i]->FGet());
+                        itemOut = new TValue(m_items[i]->FGet());
                         return 0;
                     }
 
@@ -375,7 +375,7 @@ namespace NSTypes
                 {
                     if (m_items[index] != nullptr)
                     {
-                        itemOut = &(m_items[index]->FGet());
+                        itemOut = new TValue(m_items[index]->FGet());
                         return 0;
                     }
 
@@ -396,7 +396,7 @@ namespace NSTypes
                 {
                     if (m_items[index] != nullptr)
                     {
-                        itemOut = &(m_items[index]->FGet());
+                        *itemOut = m_items[index]->FGet();
                         return 0;
                     }
 
@@ -411,7 +411,7 @@ namespace NSTypes
                 if (!FCount())
                     return 0;
 
-                size_t activeCount;
+                size_t activeCount = 0;
 
                 for (size_t i = 0; i < FCount(); ++i)
                 {
