@@ -13,5 +13,13 @@
 	"testMate.cpp.discovery.gracePeriodForMissing": 10,
 	"testMate.cpp.discovery.strictPattern": true,
 	"cmake.buildTask": true,
-	"cmake.setBuildTypeOnMultiConfig": true
+	"cmake.setBuildTypeOnMultiConfig": true,
+	"files.associations": {
+		"array": "cpp",
+		"deque": "cpp",
+		"list": "cpp",
+		"vector": "cpp",
+		"string_view": "cpp",
+		"ranges": "cpp"
+	}
 }

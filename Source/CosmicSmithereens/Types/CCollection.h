@@ -4,6 +4,14 @@
 
 namespace NSTypes
 {
+    enum class EError
+    {
+        EE_NO_ITEMS,
+        EE_INDEX_OUT_OF_BOUNDS,
+        EE_OK,
+        EE_UNEXPECTED
+    };
+
     template<class TValue>
     class CCollection: public ICollection
     {
@@ -41,10 +49,16 @@ namespace NSTypes
                 tempItems[0] = new TItem();
                 tempItems[0]->FSet(item);
 
-                for (size_t i = 0; i < FCount(); ++i)
+                if (FCount())
                 {
-                    tempItems[i + 1] = new TItem();
-                    tempItems[i + 1]->FSet(m_items[i]->FGet());
+                    for (size_t i = 0; i < FCount(); ++i)
+                    {
+                        if (m_items[i] == nullptr)
+                            continue;
+
+                        tempItems[i + 1] = new TItem();
+                        tempItems[i + 1]->FSet(m_items[i]->FGet());
+                    }
                 }
 
                 FClear();
@@ -54,6 +68,9 @@ namespace NSTypes
 
                 for (size_t i = 0; i < tempCount; ++i)
                 {
+                    if (tempItems[i] == nullptr)
+                        continue;
+
                     m_items[i] = new TItem();
                     m_items[i]->FSet(tempItems[i]->FGet());
                 }
@@ -71,12 +88,21 @@ namespace NSTypes
 
             TValue FPopFront()
             {
+                if (!FCount())
+                {
+                    m_lastError = EError::EE_NO_ITEMS;
+                    return TValue();
+                }
+
                 TItem** tempItems = new TItem*[FCount() - 1];
                 size_t tempCount = FCount() - 1;
                 TValue item = m_items[0]->FGet();
 
                 for (size_t i = 1; i < FCount(); ++i)
                 {
+                    if (m_items[i] == nullptr)
+                        continue;
+
                     tempItems[i - 1] = new TItem();
                     tempItems[i - 1]->FSet(m_items[i]->FGet());
                 }
@@ -88,6 +114,9 @@ namespace NSTypes
 
                 for (size_t i = 0; i < tempCount; ++i)
                 {
+                    if (tempItems[i] == nullptr)
+                        continue;
+
                     m_items[i] = new TItem();
                     m_items[i]->FSet(tempItems[i]->FGet());
                 }
@@ -112,10 +141,16 @@ namespace NSTypes
                 tempItems[FCount()] = new TItem();
                 tempItems[FCount()]->FSet(item);
 
-                for (size_t i = 0; i < FCount(); ++i)
+                if (FCount())
                 {
-                    tempItems[i] = new TItem();
-                    tempItems[i]->FSet(m_items[i]->FGet());
+                    for (size_t i = 0; i < FCount(); ++i)
+                    {
+                        if (m_items[i] == nullptr)
+                            continue;
+
+                        tempItems[i] = new TItem();
+                        tempItems[i]->FSet(m_items[i]->FGet());
+                    }
                 }
 
                 FClear();
@@ -125,6 +160,9 @@ namespace NSTypes
 
                 for (size_t i = 0; i < tempCount; ++i)
                 {
+                    if (tempItems[i] == nullptr)
+                        continue;
+
                     m_items[i] = new TItem();
                     m_items[i]->FSet(tempItems[i]->FGet());
                 }
@@ -142,12 +180,21 @@ namespace NSTypes
 
             TValue FPopBack()
             {
+                if (!FCount())
+                {
+                    m_lastError = EError::EE_NO_ITEMS;
+                    return TValue();
+                }
+
                 TItem** tempItems = new TItem*[FCount() - 1];
                 size_t tempCount = FCount() - 1;
                 TValue item = m_items[FCount() - 1]->FGet();
                 
                 for (size_t i = 0; i < tempCount; ++i)
                 {
+                    if (m_items[i] == nullptr)
+                        continue;
+
                     tempItems[i] = new TItem();
                     tempItems[i]->FSet(m_items[i]->FGet());
                 }
@@ -159,6 +206,9 @@ namespace NSTypes
 
                 for (size_t i = 0; i < tempCount; ++i)
                 {
+                    if (tempItems[i] == nullptr)
+                        continue;
+
                     m_items[i] = new TItem();
                     m_items[i]->FSet(tempItems[i]->FGet());
                 }
@@ -176,78 +226,71 @@ namespace NSTypes
                 return item;
             }
 
-            int FInsertAt(TValue item, size_t index)
+            void FInsertAt(TValue item, size_t index)
             {
                 if (!FCount())
-                    return 1;
-
-                if (index < 0)
                 {
-                    return 3;
+                    m_lastError = EError::EE_NO_ITEMS;
+                    return;
                 }
 
-                if (index > FActiveCount() - 1)
+                if (index > FCount() - 1)
                 {
-                    return 4;
+                    m_lastError = EError::EE_INDEX_OUT_OF_BOUNDS;
+                    return;
                 }
 
-                for (size_t activeIndex = 0, i = 0; activeIndex < FActiveCount() && i < FCount(); ++i)
+                TItem **tempItems = new TItem*[FCount() + 1];
+                size_t tempCount = FCount() + 1;
+
+                for (size_t i = 0; i < tempCount; ++i)
                 {
-                    if (m_items[i] == nullptr)   
+                    if (i < index)
+                    {
+                        if (m_items[i] == nullptr)
+                            continue;
+
+                        tempItems[i] = new TItem();
+                        tempItems[i]->FSet(m_items[i]->FGet());
+                    }
+                    else if (i == index)
+                    {
+                        tempItems[i] = new TItem();
+                        tempItems[i]->FSet(item);
+                    }
+                    else if (i > index)
+                    {
+                        if (m_items[i] == nullptr)
+                            continue;
+
+                        tempItems[i] = new TItem();
+                        tempItems[i]->FSet(m_items[i - 1]->FGet());
+                    }
+                }
+                
+                FClear();
+
+                m_items = new TItem*[tempCount];
+                m_count = tempCount;
+
+                for (size_t i = 0; i < tempCount; ++i)
+                {
+                    if (tempItems[i] == nullptr)
                         continue;
 
-                    if (activeIndex == index)
-                    {
-                        TItem **tempItems = new TItem*[FCount() + 1];
-                        size_t tempCount = FCount() + 1;
-
-                        for (size_t j = 0; j < FCount(); ++j)
-                        {
-                            if (j < i)
-                            {
-                                tempItems[j] = new TItem();
-                                tempItems[j]->FSet(m_items[j]->FGet());
-                            }
-                            else if (j == i)
-                            {
-                                tempItems[j] = new TItem();
-                                tempItems[j]->FSet(item);
-                            }
-                            else if (j > i)
-                            {
-                                tempItems[j + 1] = new TItem();
-                                tempItems[j + 1]->FSet(m_items[j]->FGet());
-                            }
-                        }
-
-                        FClear();
-
-                        m_items = new TItem*[tempCount];
-                        m_count = tempCount;
-
-                        for (size_t j = 0; j < tempCount; ++j)
-                        {
-                            m_items[j] = new TItem();
-                            m_items[j]->FSet(tempItems[j]->FGet());
-                        }
-
-                        if (FCount())
-                        {
-                            for (size_t i = 0; i < FCount(); ++i)
-                            {
-                                SAFE_DELETE(tempItems[i]);
-                            }
-                        }
-
-                        SAFE_DELETE_ARRAY(tempItems);
-
-                        return 0;
-                    }
-
-                    ++activeIndex;
+                    m_items[i] = new TItem();
+                    m_items[i]->FSet(tempItems[i]->FGet());
                 }
 
-                return 2;
+                for (size_t i = 0; i < FCount(); ++i)
+                {
+                    SAFE_DELETE(tempItems[i]);
+                }
+
+                SAFE_DELETE_ARRAY(tempItems);
+
+                m_lastError = EError::EE_OK;
+                return;
             }
 
             size_t FRemove(TValue item)
@@ -255,7 +298,10 @@ namespace NSTypes
                 size_t itemsRemoved = 0;
                 for (size_t i = 0; i < FCount(); ++i)
                 {
-                    if (m_items[i]->Get() == item)
+                    if (m_items[i] == nullptr)
+                        continue;
+
+                    if (m_items[i]->FGet() == item)
                     {
                         SAFE_DELETE(m_items[i]);
                         ++itemsRemoved;
@@ -265,145 +311,140 @@ namespace NSTypes
                 return itemsRemoved;
             }
 
-            int FErase(size_t index)
+            void FErase(size_t index)
             {
                 if (!FCount())
-                    return 1;
-
-                if (index < 0)
                 {
-                    return 3;
+                    m_lastError = EError::EE_NO_ITEMS;
+                    return;
                 }
 
-                if (index > FActiveCount() - 1)
+                if (index > FCount() - 1)
                 {
-                    return 4;
+                    m_lastError = EError::EE_INDEX_OUT_OF_BOUNDS;
+                    return;
                 }
 
-                for (size_t activeIndex = 0, i = 0; activeIndex < FActiveCount() && i < FCount(); ++i)
+                for (size_t i = 0; i < FCount(); ++i)
                 {
-                    if (activeIndex == index)
+                    if (i == index)
                     {
                         SAFE_DELETE(m_items[i]);
-                        return 0;
+                        m_lastError = EError::EE_OK;
+                        return;
                     }
-
-                    ++activeIndex;
                 }
 
-                return 2;
+                m_lastError = EError::EE_UNEXPECTED;
+                return;
             }
 
-            int FSet(TValue item, size_t index)
+            void FSet(TValue item, size_t index)
             {
                 if (!FCount())
-                    return 1;
-
-                if (index < 0)
                 {
-                    return 3;
+                    m_lastError = EError::EE_NO_ITEMS;
+                    return;
                 }
 
                 if (index > FActiveCount() - 1)
                 {
-                    return 4;
+                    m_lastError = EError::EE_INDEX_OUT_OF_BOUNDS;
+                    return;
                 }
 
-                for (size_t activeIndex = 0, i = 0; activeIndex < FActiveCount() && i < FCount(); ++i)
+                for (size_t i = 0; i < FCount(); ++i)
                 {
                     if (m_items[i] == nullptr)
-                    {   
                         continue;
-                    }
 
-                    if (activeIndex == index)
+                    if (i == index)
                     {
                         m_items[i]->FSet(item);
-                        return 0;
+                        m_lastError = EError::EE_OK;
+                        return;
                     }
-
-                    ++activeIndex;
                 }
 
-                return 2;
+                m_lastError = EError::EE_UNEXPECTED;
             }
 
-            int FGet(size_t index, TValue* itemOut)
+            TValue FGet(size_t index)
             {
                 if (!FCount())
-                    return 1;
-
-                itemOut = nullptr;
-
-                if (index < 0)
                 {
-                    return 3;
+                    m_lastError = EError::EE_NO_ITEMS;
+                    return TValue();
                 }
 
                 if (index > FActiveCount() - 1)
                 {
-                    return 4;
+                    m_lastError = EError::EE_INDEX_OUT_OF_BOUNDS;
+                    return TValue();
                 }
 
-                for (size_t activeIndex = 0, i = 0; activeIndex < FActiveCount() && i < FCount(); ++i)
+                for (size_t i = 0; i < FCount(); ++i)
                 {
                     if (m_items[i] == nullptr)
-                    {   
                         continue;
-                    }
 
-                    if (activeIndex == index)
+                    if (i == index)
                     {
-                        itemOut = new TValue(m_items[i]->FGet());
-                        return 0;
+                        m_lastError = EError::EE_OK;
+                        return m_items[i]->FGet();
                     }
-
-                    ++activeIndex;
                 }
 
-                return 2;
+                m_lastError = EError::EE_UNEXPECTED;
+                return TValue();
             }
 
-            int FFront(TValue* itemOut)
+            TValue FFront()
             {
                 if (!FCount())
-                    return 1;
+                {
+                    m_lastError = EError::EE_NO_ITEMS;
+                    return TValue();
+                }
 
-                itemOut = nullptr;
                 size_t index = 0;
                 while (index < FCount())
                 {
                     if (m_items[index] != nullptr)
                     {
-                        itemOut = new TValue(m_items[index]->FGet());
-                        return 0;
+                        m_lastError = EError::EE_OK;
+                        return m_items[index]->FGet();
                     }
 
                     ++index;
                 }
 
-                return 2;
+                m_lastError = EError::EE_UNEXPECTED;
+                return TValue();
             }
 
-            int FBack(TValue* itemOut)
+            TValue FBack()
             {
                 if (!FCount())
-                    return 1;
+                {
+                    m_lastError = EError::EE_NO_ITEMS;
+                    return TValue();
+                }
 
-                itemOut = nullptr;
                 size_t index = FCount() - 1;
                 while (index >= 0)
                 {
                     if (m_items[index] != nullptr)
                     {
-                        *itemOut = m_items[index]->FGet();
-                        return 0;
+                        m_lastError = EError::EE_OK;
+                        return m_items[index]->FGet();
                     }
 
                     --index;
                 }
 
-                return 2;
+                m_lastError = EError::EE_UNEXPECTED;
+                return TValue();
             }
 
             size_t FActiveCount()
@@ -476,18 +517,26 @@ namespace NSTypes
                 m_count = 0;
             }
 
+            EError FGetLastError()
+            {
+                return m_lastError;
+            }
+
         private:
             class TItem
             {
                 public:
                     TItem()
                     {
-                        
+                    }
+
+                    TItem(const TItem& item)
+                    {
+                        m_item = item->FGet();
                     }
 
                     ~TItem()
                     {
-                        
                     }
 
                     TValue FGet()
@@ -506,5 +555,6 @@ namespace NSTypes
 
             TItem** m_items;
             size_t m_count;
+            EError m_lastError;
     };
 }
