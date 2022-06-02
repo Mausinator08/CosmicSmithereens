@@ -54,7 +54,10 @@ namespace NSTypes
                     for (size_t i = 0; i < FCount(); ++i)
                     {
                         if (m_items[i] == nullptr)
+                        {
+                            tempItems[i] = nullptr;
                             continue;
+                        }
 
                         tempItems[i + 1] = new TItem();
                         tempItems[i + 1]->FSet(m_items[i]->FGet());
@@ -69,7 +72,10 @@ namespace NSTypes
                 for (size_t i = 0; i < tempCount; ++i)
                 {
                     if (tempItems[i] == nullptr)
+                    {
+                        m_items[i] = nullptr;
                         continue;
+                    }
 
                     m_items[i] = new TItem();
                     m_items[i]->FSet(tempItems[i]->FGet());
@@ -101,7 +107,10 @@ namespace NSTypes
                 for (size_t i = 1; i < FCount(); ++i)
                 {
                     if (m_items[i] == nullptr)
+                    {
+                        tempItems[i] = nullptr;
                         continue;
+                    }
 
                     tempItems[i - 1] = new TItem();
                     tempItems[i - 1]->FSet(m_items[i]->FGet());
@@ -115,7 +124,10 @@ namespace NSTypes
                 for (size_t i = 0; i < tempCount; ++i)
                 {
                     if (tempItems[i] == nullptr)
+                    {
+                        m_items[i] = nullptr;
                         continue;
+                    }
 
                     m_items[i] = new TItem();
                     m_items[i]->FSet(tempItems[i]->FGet());
@@ -146,7 +158,10 @@ namespace NSTypes
                     for (size_t i = 0; i < FCount(); ++i)
                     {
                         if (m_items[i] == nullptr)
+                        {
+                            tempItems[i] = nullptr;
                             continue;
+                        }
 
                         tempItems[i] = new TItem();
                         tempItems[i]->FSet(m_items[i]->FGet());
@@ -161,7 +176,10 @@ namespace NSTypes
                 for (size_t i = 0; i < tempCount; ++i)
                 {
                     if (tempItems[i] == nullptr)
+                    {
+                        m_items[i] = nullptr;
                         continue;
+                    }
 
                     m_items[i] = new TItem();
                     m_items[i]->FSet(tempItems[i]->FGet());
@@ -193,7 +211,10 @@ namespace NSTypes
                 for (size_t i = 0; i < tempCount; ++i)
                 {
                     if (m_items[i] == nullptr)
+                    {
+                        tempItems[i] = nullptr;
                         continue;
+                    }
 
                     tempItems[i] = new TItem();
                     tempItems[i]->FSet(m_items[i]->FGet());
@@ -207,7 +228,10 @@ namespace NSTypes
                 for (size_t i = 0; i < tempCount; ++i)
                 {
                     if (tempItems[i] == nullptr)
+                    {
+                        m_items[i] = nullptr;
                         continue;
+                    }
 
                     m_items[i] = new TItem();
                     m_items[i]->FSet(tempItems[i]->FGet());
@@ -248,7 +272,10 @@ namespace NSTypes
                     if (i < index)
                     {
                         if (m_items[i] == nullptr)
+                        {
+                            tempItems[i] = nullptr;
                             continue;
+                        }
 
                         tempItems[i] = new TItem();
                         tempItems[i]->FSet(m_items[i]->FGet());
@@ -261,7 +288,10 @@ namespace NSTypes
                     else if (i > index)
                     {
                         if (m_items[i] == nullptr)
+                        {
+                            tempItems[i] = nullptr;
                             continue;
+                        }
 
                         tempItems[i] = new TItem();
                         tempItems[i]->FSet(m_items[i - 1]->FGet());
@@ -276,7 +306,10 @@ namespace NSTypes
                 for (size_t i = 0; i < tempCount; ++i)
                 {
                     if (tempItems[i] == nullptr)
+                    {
+                        m_items[i] = nullptr;
                         continue;
+                    }
 
                     m_items[i] = new TItem();
                     m_items[i]->FSet(tempItems[i]->FGet());
@@ -347,7 +380,7 @@ namespace NSTypes
                     return;
                 }
 
-                if (index > FActiveCount() - 1)
+                if (index > FCount() - 1)
                 {
                     m_lastError = EError::EE_INDEX_OUT_OF_BOUNDS;
                     return;
@@ -377,7 +410,7 @@ namespace NSTypes
                     return TValue();
                 }
 
-                if (index > FActiveCount() - 1)
+                if (index > FCount() - 1)
                 {
                     m_lastError = EError::EE_INDEX_OUT_OF_BOUNDS;
                     return TValue();
@@ -407,6 +440,28 @@ namespace NSTypes
                     return TValue();
                 }
 
+                return m_items[0]->FGet();
+            }
+
+            TValue FBack()
+            {
+                if (!FCount())
+                {
+                    m_lastError = EError::EE_NO_ITEMS;
+                    return TValue();
+                }
+
+                return m_items[FCount()]->FGet();
+            }
+
+            TValue FActiveFront()
+            {
+                if (!FCount())
+                {
+                    m_lastError = EError::EE_NO_ITEMS;
+                    return TValue();
+                }
+
                 size_t index = 0;
                 while (index < FCount())
                 {
@@ -423,7 +478,7 @@ namespace NSTypes
                 return TValue();
             }
 
-            TValue FBack()
+            TValue FActiveBack()
             {
                 if (!FCount())
                 {

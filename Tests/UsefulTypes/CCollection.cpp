@@ -77,9 +77,9 @@ TEST(UsefulTypesCCollectionTest, SetAndGetItem)
     collection->FInsertAt(4, 1);
     EXPECT_EQ(collection->FGetLastError(), NSTypes::EError::EE_OK);
 
-    EXPECT_EQ(collection->FFront(), 3);
+    EXPECT_EQ(collection->FActiveFront(), 3);
     EXPECT_EQ(collection->FGetLastError(), NSTypes::EError::EE_OK);
-    EXPECT_EQ(collection->FBack(), 2);
+    EXPECT_EQ(collection->FActiveBack(), 2);
     EXPECT_EQ(collection->FGetLastError(), NSTypes::EError::EE_OK);
 
     SAFE_DELETE(collection);
@@ -103,30 +103,30 @@ TEST(UsefulTypesCCollectionTest, EraseAndRemove)
 
     collection->FPushBack(2);
 
-    EXPECT_EQ(collection->FGet(0), 0);
+    EXPECT_EQ(collection->FGet(1), 2);
     EXPECT_EQ(collection->FGetLastError(), NSTypes::EError::EE_OK);
-    EXPECT_EQ(collection->FCount(), 1);
+    EXPECT_EQ(collection->FCount(), 2);
     EXPECT_EQ(collection->FActiveCount(), 1);
 
     EXPECT_EQ(collection->FRemove(2), 1);
     EXPECT_EQ(collection->FGetLastError(), NSTypes::EError::EE_OK);
-    EXPECT_EQ(collection->FCount(), 1);
+    EXPECT_EQ(collection->FCount(), 2);
     EXPECT_EQ(collection->FActiveCount(), 0);
 
     collection->FPushBack(1);
     collection->FPushBack(2);
     collection->FPushBack(1);
 
-    EXPECT_EQ(collection->FCount(), 4);
+    EXPECT_EQ(collection->FCount(), 5);
     EXPECT_EQ(collection->FActiveCount(), 3);
 
     EXPECT_EQ(collection->FRemove(1), 2);
     EXPECT_EQ(collection->FGetLastError(), NSTypes::EError::EE_OK);
-    EXPECT_EQ(collection->FCount(), 4);
+    EXPECT_EQ(collection->FCount(), 5);
     EXPECT_EQ(collection->FActiveCount(), 1);
     EXPECT_EQ(collection->FRemove(2), 1);
     EXPECT_EQ(collection->FGetLastError(), NSTypes::EError::EE_OK);
-    EXPECT_EQ(collection->FCount(), 4);
+    EXPECT_EQ(collection->FCount(), 5);
     EXPECT_EQ(collection->FActiveCount(), 0);
 
     SAFE_DELETE(collection);
