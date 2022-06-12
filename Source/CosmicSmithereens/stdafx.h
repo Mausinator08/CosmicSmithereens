@@ -7,6 +7,7 @@
 #include <list>
 #include <deque>
 #include <queue>
+#include <vector>
 #include <regex>
 
 // Math header

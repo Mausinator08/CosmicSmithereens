@@ -77,29 +77,6 @@
 			"environment": [],
 			"internalConsoleOptions": "openOnSessionStart",
 			"externalConsole": false
-		},
-		{
-			"name": "(Windows) Launch Test",
-			"type": "cppdbg",
-			"request": "launch",
-			"program": "${workspaceFolder}/build/bin/Debug/Test_CosmicSmithereens.exe",
-			"preLaunchTask": "Install Test",
-			"args": [],
-			"stopAtEntry": false,
-			"cwd": "${workspaceFolder}/build/bin/Debug/",
-			"environment": [],
-			"internalConsoleOptions": "openOnSessionStart",
-			"avoidWindowsConsoleRedirection": true,
-			"externalConsole": false,
-			"miDebuggerPath": "G:/msys64/mingw64/bin/gdb.exe",
-			"MIMode": "gdb",
-			"setupCommands": [
-				{
-					"description": "Enable pretty-printing for gdb",
-					"text": "-enable-pretty-printing",
-					"ignoreFailures": true
-				}
-			]
-		},
+		}
 	]
 }
