@@ -9,6 +9,8 @@
 #include <queue>
 #include <vector>
 #include <regex>
+#include <locale>
+#include <codecvt>
 
 // Math header
 #include <cmath>

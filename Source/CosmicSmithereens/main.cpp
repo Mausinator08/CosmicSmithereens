@@ -6,6 +6,7 @@
 #include "memplumber.h"
 #include "Debugging/Debug.h"
 #include "FileSystem/FSPlatform.h"
+#include "Functions/Strings.h"
 #include <SDL.h>
 
 /**
@@ -20,16 +21,16 @@ int main(int argc, char *argv[])
 
 	try
 	{
-		if (!MakeDirectory("Logs/"))
+		if (!MakeDirectory(L"Logs/"))
 		{
 			std::cout << "Could not create directory \"Logs/\"!" << std::endl;
 		}
 
-		MemPlumber::start(Debugging::IsDebugBuild(), ConvertToPathStyle("Logs/memleaks-verbose.log").c_str());
+		MemPlumber::start(Debugging::IsDebugBuild(), ws2s(ConvertToPathStyle(L"Logs/memleaks-verbose.log")).c_str());
 
 		// Creates (instantiates) the game with the applicaiton
 		// name of "CosmicSmithereens".
-		if (!CApp::CreateApp("CosmicSmithereens"))
+		if (!CApp::CreateApp(L"CosmicSmithereens"))
 		{
 			ShowFatalDialog("Could not create application!");
 			// If unsuccessfull then return 0.
@@ -54,7 +55,7 @@ int main(int argc, char *argv[])
 
 	size_t count = 0;
 	uint64_t size = 0;
-	MemPlumber::memLeakCheck(count, size, Debugging::IsDebugBuild(), ConvertToPathStyle("Logs/memleaks-verbose.log").c_str());
+	MemPlumber::memLeakCheck(count, size, Debugging::IsDebugBuild(), ws2s(ConvertToPathStyle(L"Logs/memleaks-verbose.log")).c_str());
 
 	if (Debugging::IsDebugBuild() == true)
 	{

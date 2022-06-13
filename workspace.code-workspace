@@ -82,7 +82,8 @@
 			"variant": "cpp",
 			"set": "cpp",
 			"any": "cpp",
-			"iomanip": "cpp"
+			"iomanip": "cpp",
+			"locale": "cpp"
 		},
 		"testMate.cpp.test.workingDirectory": "${workspaceFolder}",
 		"testMate.cpp.test.executables": "{build,Build,BUILD,out,Out,OUT}/**/{test,Test,TEST}*",

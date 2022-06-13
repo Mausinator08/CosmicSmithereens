@@ -23,7 +23,7 @@ private:
 	 *
 	 *      @param [in] lpcwstrApplicatonName 
 	 */
-	explicit CApp(std::string applicatonName);
+	explicit CApp(std::wstring applicatonName);
 
 public:
 	/**
@@ -69,7 +69,7 @@ public:
   	* @brief Gets the application's name
   	* @return Returns the application's name
   	*/
-	std::string GetApplicatoinName();
+	std::wstring GetApplicatoinName();
 #pragma endregion
 
 #pragma region CApp Instance Members
@@ -81,7 +81,7 @@ public:
      *
      *      @return True if successfull. False if not.
      */
-	static bool CreateApp(std::string applicatonName);
+	static bool CreateApp(std::wstring applicatonName);
 	/**
 	 *  Returns the app's app.
 	 *
@@ -158,7 +158,7 @@ private:
 
 #pragma region Instance Members
 	static std::unique_ptr<CApp> m_pInstance;
-	std::string m_applicationName;
+	std::wstring m_applicationName;
 #pragma endregion
 
 #pragma region System Members

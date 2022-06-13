@@ -2,6 +2,7 @@
 
 #include "CApp.h"
 #include "UI/Dialog.h"
+#include "Functions/Strings.h"
 
 #include <SDL.h>
 
@@ -12,7 +13,7 @@ std::unique_ptr<CApp> CApp::m_pInstance = NULL;
  *
  *      @param [in] lpcwstrApplicatonName 
  */
-CApp::CApp(std::string applicationName)
+CApp::CApp(std::wstring applicationName)
 {
 	// Initial values
 	m_bTerminate = false;
@@ -61,7 +62,7 @@ bool CApp::IsTerminating()
  *
  *      @return True if successfull. False if not.
  */
-bool CApp::CreateApp(std::string applicatonName)
+bool CApp::CreateApp(std::wstring applicatonName)
 {
 	// If an instance already exists, then do not create another application instance.
 	if (m_pInstance)
@@ -187,7 +188,7 @@ bool CApp::Initialize()
 	}
 
 	m_pWindow = SDL_CreateWindow(
-		m_applicationName.c_str(),
+		ws2s(m_applicationName).c_str(),
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		1280,

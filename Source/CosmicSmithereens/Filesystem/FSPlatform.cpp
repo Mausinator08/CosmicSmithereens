@@ -3,6 +3,7 @@
 #include "FSPlatform.h"
 #include "windows.h"
 #include "sys/stat.h"
+#include "Functions/Strings.h"
 
 PathStylesEnum PathStyle()
 {
@@ -25,18 +26,18 @@ PathStylesEnum PathStyle()
     }
 }
 
-const std::string ConvertToPathStyle(const std::string path)
+const std::wstring ConvertToPathStyle(const std::wstring path)
 {
     switch (PathStyle())
     {
     case PathStylesEnum::WINDOWS:
     {
-        return std::regex_replace(path, std::regex("/"), "\\");
+        return s2ws(std::regex_replace(ws2s(path), std::regex("/"), "\\"));
     }
     break;
     case PathStylesEnum::UNIX:
     {
-        return std::regex_replace(path, std::regex("\\"), "/");
+        return s2ws(std::regex_replace(ws2s(path), std::regex("\\"), "/"));
     }
     break;
     default:
@@ -47,20 +48,20 @@ const std::string ConvertToPathStyle(const std::string path)
     }
 }
 
-bool MakeDirectory(const std::string path)
+bool MakeDirectory(const std::wstring path)
 {
-    std::string finalPath = ConvertToPathStyle(path);
+    std::wstring finalPath = ConvertToPathStyle(path);
 
     switch (PathStyle())
     {
     case PathStylesEnum::WINDOWS:
     {
-        return CreateDirectoryA(finalPath.c_str(), NULL) != 0 ? true : (GetLastError() == ERROR_ALREADY_EXISTS ? true : false);
+        return CreateDirectoryW(finalPath.c_str(), NULL) != 0 ? true : (GetLastError() == ERROR_ALREADY_EXISTS ? true : false);
     }
     break;
     case PathStylesEnum::UNIX:
     {
-        return mkdir(finalPath.c_str()) != -1 ? true : (errno == EEXIST ? true : false);
+        return mkdir(ws2s(finalPath).c_str()) != -1 ? true : (errno == EEXIST ? true : false);
     }
     break;
     default:

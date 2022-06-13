@@ -19,6 +19,8 @@ ${3rdPartyDir}/MemPlumber/${CMAKE_BUILD_TYPE}/include ${3rdPartyDir}/cwalk/${CMA
 link_directories(${3rdPartyDir}/SDL2/${CMAKE_BUILD_TYPE}/lib ${3rdPartyDir}/spdlog/${CMAKE_BUILD_TYPE}/lib ${3rdPartyDir}/MemPlumber/${CMAKE_BUILD_TYPE}/lib
 ${3rdPartyDir}/cwalk/${CMAKE_BUILD_TYPE}/lib ${3rdPartyDir}/googletest/build/lib)
 
+add_compile_definitions(UNICODE _UNICODE)
+
 add_library(pch Source/CosmicSmithereens/stdafx.cpp Source/CosmicSmithereens/stdafx.h)
 
 include(${3rdPartyDir}/cmake-precompiled-header/PrecompiledHeader.cmake)

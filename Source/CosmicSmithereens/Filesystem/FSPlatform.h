@@ -18,11 +18,11 @@ PathStylesEnum PathStyle();
      * @param path The path to convert.
      * @return The resulting path.
      */
-const std::string ConvertToPathStyle(const std::string path);
+const std::wstring ConvertToPathStyle(const std::wstring path);
 
 /**
      * @brief Creates a directory or directories if path contains multiple new directories.
      * @param path The path to the new directory or directories.
      * @return true if successful, false if unsuccessful.
      */
-bool MakeDirectory(const std::string path);
+bool MakeDirectory(const std::wstring path);
